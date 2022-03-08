@@ -176,6 +176,10 @@ testy = out_encoder.transform(testy)
 # fit model
 model = SVC(kernel='linear', probability=True)
 model.fit(trainX, trainy)
+
+##########################################################################################################################################################################
+
+
 # test model on a random example from the test dataset
 selection = choice([i for i in range(testX.shape[0])])
 random_face_pixels = testX_faces[selection]
