@@ -9,9 +9,6 @@ from numpy import asarray
 from mtcnn.mtcnn import MTCNN
 from numpy import load
 from numpy import expand_dims
-#from tensorflow import keras
-#from keras.models import load_model
-#from tensorflow import keras.models.load_model
 from tensorflow.keras.models import load_model
 from numpy import load
 from sklearn.metrics import accuracy_score
@@ -157,8 +154,6 @@ score_train = accuracy_score(trainy, yhat_train)
 score_test = accuracy_score(testy, yhat_test)
 # summarize
 print('Accuracy: train=%.3f, test=%.3f' % (score_train*100, score_test*100))
-
-
 
 
 # develop a classifier for the 5 Celebrity Faces Dataset
