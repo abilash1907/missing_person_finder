@@ -1,4 +1,4 @@
-import Login from "./Pages/Login";
+import Register from "./Pages/Register";
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
     <Router>
     <div className="App">
       <Routes>
-      <Route exact path='/' element={< Login/>}></Route>
+      <Route exact path='/' element={< Register/>}></Route>
       </Routes>
     </div>
     </Router>

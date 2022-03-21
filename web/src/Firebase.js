@@ -1,6 +1,7 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/storage';
+import 'firebase/auth';
 const firebaseConfig = {
     apiKey: "AIzaSyDpETxYXZAzaY6pDd155VCd8j8TiaKokmY",
     authDomain: "slacks-1008c.firebaseapp.com",
@@ -14,4 +15,5 @@ const firebaseConfig = {
   const firebaseApp = firebase.initializeApp(firebaseConfig);
   const db = firebaseApp.firestore();
   const store = firebaseApp.storage();
-  export { db, store};
+  const auth =firebaseApp.auth();
+  export { db, store, auth};
