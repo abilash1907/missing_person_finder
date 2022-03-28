@@ -1,31 +1,46 @@
 import React, { useState } from 'react';
 import './Register.css';
+import axios from 'axios'
 import {RegionDropdown} from 'react-country-region-selector';
 function Register() {
     const [fname,SetFname]=useState('');
     const [Lname,SetLname]=useState('');
     const [Country,SetCountry]=useState('');
     const [des,SetDes]=useState('');
-    const [file,setFile] = useState([])
+    const [file,setFile] = useState(null)
     const imagehandle =(e)=>{
+        const datas=[]
         for(let i =0; i<e.currentTarget.files.length;i++){
-            const newFiles= e.currentTarget.files[i]
-            newFiles["id"]=Math.random();
-            setFile(prestate=>[...prestate,newFiles])
+            const value= e.currentTarget.files[i]
+            datas.push(value)
         }
+        setFile(datas)
     }
     const handleSubmit= e =>{
         e.preventDefault()
-        console.log(fname);
-        console.log(Lname);
-        console.log(Country);
-        console.log(des);
+        console.log(file)
+        let form_data = new FormData();
+        file.map((img)=>{
+            form_data.append('image', img );
+            axios.post('register/', form_data, {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+            })
+        })
+        
+        .then((res)=>{
+            console.log(res.data)
+        })
+        .catch((err)=>console.log(err))
+        
+        
     }
 
         return (
             <div class="container">
             <h1>Register New case</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete='off'>
             <div class="row">
             <div class="col-25">
                 <label for="fname">First Name</label>
@@ -47,22 +62,22 @@ function Register() {
                 <label for="country">Last Seen</label>
             </div>
             <div class="col-75">
-                <RegionDropdown country="India" value={Country} onChange={e=> SetCountry(e)}/>
+                <RegionDropdown country="India" value={Country} name="place" onChange={e=> SetCountry(e)}/>
 
             </div>
             </div>
             <div class="row">
             <div class="col-25">
-                <label for="subject">Subject</label>
+                <label for="description">Description</label>
             </div>
             <div class="col-75">
-                <textarea id="subject" value={des} onChange={e=> SetDes(e.currentTarget.value)} name="subject" placeholder="Write something.."></textarea>
+                <textarea id="des" value={des} onChange={e=> SetDes(e.currentTarget.value)} name="description" placeholder="Write something.."></textarea>
             </div>
             <div class="col-25">
                 <label for="Image">ImageUpload</label>
             </div>
             <div class="col-75">
-                <input type="file" onChange={imagehandle} accept="image/*"/>
+                <input type="file" name='img' src={file} onChange={imagehandle} multiple accept="image/*"/>
             </div>
             </div>
             <div class="row">
