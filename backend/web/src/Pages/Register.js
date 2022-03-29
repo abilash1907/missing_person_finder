@@ -8,7 +8,7 @@ function Register() {
     const [Country,SetCountry]=useState('');
     const [des,SetDes]=useState('');
     const [file,setFile] = useState(null)
-    const imagehandle =(e)=>{
+    function imagehandle (e){
         const datas=[]
         for(let i =0; i<e.currentTarget.files.length;i++){
             const value= e.currentTarget.files[i]
@@ -16,19 +16,19 @@ function Register() {
         }
         setFile(datas)
     }
-    const handleSubmit= e =>{
+     const handleSubmit=(e)=>{
         e.preventDefault()
-        console.log(file)
         let form_data = new FormData();
-        file.map((img)=>{
-            form_data.append('image', img );
-            axios.post('register/', form_data, {
+        form_data.append('firstname',fname);
+        form_data.append('lastname',Lname);
+        for(let i =0; i<file.length;i++){
+            form_data.append('image',file[i])
+        }
+        axios.post('register/', form_data, {
             headers: {
                 'content-type': 'multipart/form-data'
             }
-            })
         })
-        
         .then((res)=>{
             console.log(res.data)
         })
@@ -77,7 +77,7 @@ function Register() {
                 <label for="Image">ImageUpload</label>
             </div>
             <div class="col-75">
-                <input type="file" name='img' src={file} onChange={imagehandle} multiple accept="image/*"/>
+                <input type="file" name='img' src={file} onChange={(e)=>imagehandle(e)} multiple accept="image/*"/>
             </div>
             </div>
             <div class="row">
