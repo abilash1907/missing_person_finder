@@ -7,7 +7,7 @@ from rest_framework.parsers import MultiPartParser, FormParser,FileUploadParser
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import RegisterSerializer
-from .models import Register,ImageUpload
+from .models import Register
 from django.forms.models import model_to_dict
 
 
@@ -26,21 +26,24 @@ class PostView(APIView):
         return Response(serializer.data)
     @parser_classes((FormParser, MultiPartParser, FileUploadParser))
     def post(self, request):
-        datas=dict((request.data))
+        
+
+        '''
         firstname=datas['firstname']
         lastname=datas['lastname']
         images=datas['image']
         register_obj=Register.objects.create(firstname=firstname)
         register_obj.lastname=lastname
-        register_obj.save()
+        
         for img in images:
             ImageUpload.objects.create(image=img, info=register_obj)
 
-        
+        register_obj.save()
         return redirect('/')
         
         '''
-        posts_serializer = RegisterSerializer(data=datas)
+
+        posts_serializer = RegisterSerializer(data=request.data,many=True)
         print(posts_serializer)
         if posts_serializer.is_valid():
             posts_serializer.save()
@@ -48,4 +51,4 @@ class PostView(APIView):
         else:
             print('error', posts_serializer.errors)
             return Response(posts_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        '''
+        

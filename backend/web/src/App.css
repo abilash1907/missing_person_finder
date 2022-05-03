@@ -7,14 +7,14 @@
     position: relative;
     z-index: 1;
 }
-a{
+.Navbar button{
     margin: 2rem;
     margin-top: 2rem;
-    color: #f1e7e7;
+    background-color: black;
+    color: white;
     font-weight:bold;
-    text-decoration: none;
+    border: none;
 }
-a:hover {
-   text-decoration: underline;
-    color: rgb(196, 22, 240);
+.Navbar button:hover {
+    color: blueviolet;
 }

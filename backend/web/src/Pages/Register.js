@@ -8,10 +8,13 @@ function Register() {
     const [Country,SetCountry]=useState('');
     const [des,SetDes]=useState('');
     const [file,setFile] = useState(null)
+    const[url,setUrl]=useState([]);
+    const data="http://localhost:8000/register/";
     function imagehandle (e){
         const datas=[]
         for(let i =0; i<e.currentTarget.files.length;i++){
             const value= e.currentTarget.files[i]
+            setUrl(prestate=>[...prestate, URL.createObjectURL(value)])
             datas.push(value)
         }
         setFile(datas)
@@ -22,9 +25,10 @@ function Register() {
         form_data.append('firstname',fname);
         form_data.append('lastname',Lname);
         for(let i =0; i<file.length;i++){
+            
             form_data.append('image',file[i])
         }
-        axios.post('register/', form_data, {
+        axios.post(data, form_data, {
             headers: {
                 'content-type': 'multipart/form-data'
             }
@@ -77,8 +81,15 @@ function Register() {
                 <label for="Image">ImageUpload</label>
             </div>
             <div class="col-75">
-                <input type="file" name='img' src={file} onChange={(e)=>imagehandle(e)} multiple accept="image/*"/>
+                <input type="file" name='img' src={file} onChange={(e)=>imagehandle(e)} multiple accept="image/*"/>  
             </div>
+            </div>
+            <div className="row">
+            {url? url.map(img=>{
+                    return(
+                    <img alt='post' width="200px" height="200px" src={img}></img>
+                    );
+                }) : ''}
             </div>
             <div class="row">
             <input type="submit" value="Submit"/>

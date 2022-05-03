@@ -16,8 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from core.views import front,PostView
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',front,name="front"),
+    path('register_case/',front,name="front"),
+    path('match_cases/',front,name="front"),
      path('register/', PostView.as_view(), name= 'posts_list'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
